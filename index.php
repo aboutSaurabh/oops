@@ -111,7 +111,7 @@
          <td><b><?php echo $row["name"]; ?></b></td>
          <td><b><?php echo $row["image"]; ?></b></td>
          <td><a href="index.php?update=1&id=<?php echo $row["id"]; ?>" class="btn btn-info">Edit</a></td>
-         <td><a href="action.php?delete=1&id=<?php echo $row["id"]; ?>" class="btn btn-danger">Delete</a></td>
+         <td><a href="server.php?delete=1&id=<?php echo $row["id"]; ?>" class="btn btn-danger">Delete</a></td>
       </tr>
       <?php
          }

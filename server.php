@@ -18,7 +18,7 @@ class Oprations extends Database
 		}
 	}
 public function get_data($table){
-	ECHO $sql = "Select * FROM ".$table;
+	 $sql = "Select * FROM ".$table;
 	 $query = mysqli_query($this->con,$sql);
 	$array = array();
 	while($data = mysqli_fetch_assoc($query)){
@@ -58,7 +58,23 @@ $sql = "UPDATE ".$table." SET ".$sql." WHERE ".$condition;
 if(mysqli_query($this->con,$sql)){
 return true;
 }
-}/*
+
+}
+function delete_data($table,$where){
+		$sql = "";
+		$condition = "";
+		foreach ($where as $key => $value) {
+		$condition .= $key . "='" . $value . "' AND ";
+		}
+		echo $condition. "<br>";
+		
+		 $condition = substr($condition, 0, -5); 
+		$sql = "DELETE FROM ".$table." WHERE ".$condition;
+		if(mysqli_query($this->con,$sql)){
+		return true;
+		}
+}
+/*
 $sql = "";
 $condition = "";
 foreach ($where as $key => $value) {
@@ -85,11 +101,24 @@ $obj = new Oprations;
 
 if(!empty($_POST["submit"])  && $_POST["submit"]=="Store"){
 	$data = $_POST;
+	
 	unset($data["submit"]);
 	$check= $obj->insert("users",$data);
 	if($check){
 	   header("location:index.php?msg=Record Inserted");
 	}
+}
+if(!empty($_GET["delete"])){
+	$data = $_GET;
+//	prd($data);
+	$where = array("id"=>$data["id"]);
+	unset($data["submit"]);
+	$check= $obj->delete_data("users",$where);
+	if($check){
+	   header("location:index.php?msg=Record Deleted");
+	}
+}else{
+	//die("hi");
 }
 if(!empty($_POST["edit"])  && $_POST["edit"]=="Update"){
 	$data = $_POST;
